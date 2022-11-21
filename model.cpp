@@ -36,12 +36,20 @@ class model {
             this->lineTuples = newLineTuples;
         }
 
+        std::string getFilePath(){
+            return this->filePath;
+        }
+
+        void setFilePath(std::string newFilePath){
+            this->filePath = newFilePath;
+        }
+
 
     private:
-        std::string questionType;
-        int numQuestions;
-        std::string lmsType;
+        std::string questionType = "reorder";
+        int numQuestions = 500;
+        std::string lmsType = "canvas";
         std::vector<std::string> lineTuples;
-        std::string filePath;
+        std::string filePath = NULL;
         
 };

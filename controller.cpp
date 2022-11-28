@@ -11,10 +11,6 @@ using namespace std;
 
 class controller {
     public:
-
-   
-    
-
       string* mergeLines(int start, int end, string* myarr){
          int tempSize = myarr->size(); 
          string* temparr[tempSize];

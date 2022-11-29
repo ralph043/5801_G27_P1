@@ -2,17 +2,17 @@
 # fixture_demo.py
 
 import pytest
-import Controller
+from controller import *
+from model import Model
 
 
-def test_model(lines, lms_type, question_type, num_questions):
+def test_model(lms_type, question_type, num_questions, lines):
     # instantiating a model object
 
-    model = Model(lines, lms_type, question_type, num_questions)
+    model = Model(lms_type, question_type, num_questions, lines)
 
     # testing values with getters
-
-    assert (model.get_lines() == lines)
+    print(model.get_lines())
     assert (model.get_lms_type() == lms_type)
     assert (model.get_question_type() == question_type)
     assert (model.get_num_questions() == num_questions)
@@ -24,9 +24,9 @@ def test_model(lines, lms_type, question_type, num_questions):
     question_type = "changed Parson"
     num_questions = 8
     model.set_lines(lines)
-    model1.set_lms_type(lms_type)
-    model1.set_question_type(question_type)
-    model1.set_num_questions(num_questions)
+    model.set_lms_type(lms_type)
+    model.set_question_type(question_type)
+    model.set_num_questions(num_questions)
 
     # printing new values with getters
     
@@ -47,5 +47,5 @@ if __name__ == "__main__":
     
     # testing the model class and its functions here
 
-    test_model(lines, lms_type, question_type, num_questions)
+    test_model( lms_type, question_type, num_questions, lines)
 

@@ -11,7 +11,15 @@ from model import Model
 def chooseSettings():
     # Ask user for file name and read file line by line into an array
     file_name = input("Enter file name: ")
-    file = open(file_name, "r")
+    
+    while True:
+        try:
+            file = open(file_name, "r")
+            break
+        except:
+            print("File not found. Please try again.")
+            file_name = input("Enter file name: ")
+
     lines = file.readlines()
     file.close()
 
@@ -22,6 +30,9 @@ def chooseSettings():
     while True:
         try:
             num_questions = int(input("Enter number of questions: "))
+            if (num_questions <= 0):
+                print("Number of questions must be greater than 0. Please try again.")
+                continue
             break
         except ValueError:
             print("Invalid Input, Please enter a number.")
@@ -82,7 +93,7 @@ def chooseSettings():
                 if start >= end:
                     print("Start line must be less than end line")
                     continue
-                elif end > len(lines):
+                elif end >= len(lines):
                     print("Invalid input, please enter a end line less than or equal to the number of lines")
                     continue
                 combined = ""
@@ -99,16 +110,7 @@ def chooseSettings():
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     model = Model(lms_type, question_type, num_questions, lines)
-    
 
-
-
-    
-   
-    
-
-
-
-    
-
-
+    def generateQuestions(model):
+        #functionality to be added in later versions
+        pass

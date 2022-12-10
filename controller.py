@@ -114,9 +114,18 @@ def chooseSettings():
 
         # create a sub list of lines 
         
-        for each line in questions:
-            # create a sub list of this line, or maybe we're going to want to 
+        for line in questions:
+            # task: Breaking down each array into subarray 
+            # create a sub_list of this line, or maybe we're going to want to 
             # create an object using question as a class so we can make an object out of it
+            # and then we can add the object to a list of objects
+
+            # task: Reordering indices of words in each subarray
+            # split the sub_list into words using split() function
+            # shuffle the words in the sub_list
+            # join the words in the sub_list back into a string
+            pass
+
               
 
         pass

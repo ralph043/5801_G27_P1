@@ -2,12 +2,6 @@ from model import Model
 
 #class Controller:
 
-    
-
-
-    
-
-
 def chooseSettings():
     # Ask user for file name and read file line by line into an array
     file_name = input("Enter file name: ")

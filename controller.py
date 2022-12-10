@@ -107,4 +107,16 @@ def chooseSettings():
 
     def generateQuestions(model):
         #functionality to be added in later versions
+
+        question_type = model.get_question_type()
+        questions = model.get_lines()
+        numOfQuestions = model.get_num_questions()
+
+        # create a sub list of lines 
+        
+        for each line in questions:
+            # create a sub list of this line, or maybe we're going to want to 
+            # create an object using question as a class so we can make an object out of it
+              
+
         pass

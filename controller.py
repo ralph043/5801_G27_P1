@@ -168,10 +168,13 @@ def chooseSettings():
 
         questionsToReturn = []
 
-        reachedEOF = False
         question_type = model.get_question_type()
         questions = model.get_lines()
         numOfQuestions = model.get_num_questions()
+
+        #variable to count number of questions generated
+
+        count = 0
 
                #functionality to be added in later versions
 
@@ -185,8 +188,11 @@ def chooseSettings():
                 exit # have to fix this later, edge case that will need to be handled
             
             for line in questions:
-                if(numOfQuestions > 0 or reachedEOF):
-                    questionsToReturn.append(MCQuestionGeneratorHelper(line))
+                if (count > numOfQuestions):
+                    break
+                questionsToReturn.append(MCQuestionGeneratorHelper(line))
+                count = count + 1
+                
 
             # create a sub list of this line, or maybe create an object 
             
@@ -202,11 +208,14 @@ def chooseSettings():
 
         #if question type is fill in the blank code for fill in the blank goes here
 
-            #break down each list into sublist
+        elif (question_type == "fib"):
+            
+            #loop through each line in the list
 
-            #delete indecies to create variations of sublist
-
-            #recombine variations of sublist with original sublist
+            for line in questions:
+                if (count > numOfQuestions):
+                    break
+                #call helper function to generate a fill in the blank variation of the line
 
 
         f.close()

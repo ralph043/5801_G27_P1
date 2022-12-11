@@ -156,7 +156,7 @@ def chooseSettings():
     
     def FIBQuestionGeneratorHelper(correct_line):
         #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
-        first_blank = random.randint(0, len(correct_line))
+        first_blank = random.randint(0, len(correct_line) - 1)
         
         #randomly generate a number between 1 and the length of the line remaining after the first index, this will be the number of indexes deleted
 
@@ -171,10 +171,21 @@ def chooseSettings():
         for i in range(first_blank, first_blank + num_deleted):
             line_list[i] = "____"
 
-            
+
         #convert the list back into a string
 
-        line = " ".join(line_list)
+        fib_line = " ".join(line_list)
+
+        #create a list with the correct line and the fib line
+
+        options = [correct_line, fib_line]
+
+        #create a question object with the list of options and the index of the correct line and return it
+
+        q1 = Question(options, 0)
+        return q1
+
+
 
         
 
@@ -186,7 +197,7 @@ def chooseSettings():
 
         #creating a file to output
 
-        f = open("output.txt", "x")
+        f = open("output.txt", "w+")
 
         #create a list of objects named "questionsToReturn"
 
@@ -216,19 +227,6 @@ def chooseSettings():
                     break
                 questionsToReturn.append(MCQuestionGeneratorHelper(line))
                 count = count + 1
-                
-
-            # create a sub list of this line, or maybe create an object 
-            
-                # generate 3 mutants with one element of the list out of place
-
-            # using question as a class so we can make an object out of it
-
-            #reorder indicies of sublist into 3 variations
-
-            #combine 3 variations of sublist with original list
-
-
 
         #if question type is fill in the blank code for fill in the blank goes here
 
@@ -241,6 +239,10 @@ def chooseSettings():
                     break
                 #call helper function to generate a fill in the blank variation of the line
                 questionsToReturn.append(FIBQuestionGeneratorHelper(line))
+                count = count + 1
+
+        
+        #write questions to file
 
 
         f.close()

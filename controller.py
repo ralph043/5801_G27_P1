@@ -6,7 +6,7 @@ from question import Question
 
 def chooseSettings():
     # Ask user for file name and read file line by line into an array
-    file_name = input("Enter file name: ")
+    file_name = input("Enter input file name: ")
     
     while True:
         try:
@@ -19,9 +19,20 @@ def chooseSettings():
     lines = file.readlines()
     file.close()
 
+    output_file_name = input("Enter output file name: ")
+
+     a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
+
     #ask for lms type, question type, number of questions, and if they want to remove comments.
     lms_type = input("Enter LMS type: ")
-    question_type = input("Enter question type: ")
+
+    while True:
+        question_type = input("Enter question type:('mc' for multiple choice / 'fib' for fill in the blank) ")
+
+        if question_type == "mc" or question_type == "fib":
+            break
+        else:
+            print("Please enter a valid question type of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
     while True:
         try:
@@ -106,7 +117,7 @@ def chooseSettings():
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
-    model= Model(lms_type, question_type, num_questions, lines)
+    model= Model(lms_type, question_type, num_questions, lines, output_file_name)
 
 
     def MCQuestionGeneratorHelper(correct_line):

@@ -170,7 +170,9 @@ def chooseSettings():
 
         #creating a file to output
 
-        f = open("output.txt", "x")
+        output_file_name += ".txt"
+
+        f = open(output_file_name, "x")
 
         #create a list of objects named "questionsToReturn"
 

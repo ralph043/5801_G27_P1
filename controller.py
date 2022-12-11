@@ -172,7 +172,7 @@ def chooseSettings():
 
         output_file_name += ".txt"
 
-        f = open(output_file_name, "x")
+        f = open(output_file_name, "w+")
 
         #create a list of objects named "questionsToReturn"
 

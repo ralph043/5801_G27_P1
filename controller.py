@@ -152,10 +152,7 @@ def chooseSettings():
         q1 = Question(options, correct_index)
         return q1
 
-                
-
-            
-
+    
 
 
     def generateQuestions(model):

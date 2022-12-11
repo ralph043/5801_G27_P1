@@ -107,6 +107,7 @@ def chooseSettings():
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
     model= Model(lms_type, question_type, num_questions, lines)
+    generateQuestions(model)
 
 
     def MCQuestionGeneratorHelper(correct_line):
@@ -151,6 +152,32 @@ def chooseSettings():
 
         q1 = Question(options, correct_index)
         return q1
+
+    
+    def FIBQuestionGeneratorHelper(correct_line):
+        #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
+        first_blank = random.randint(0, len(correct_line))
+        
+        #randomly generate a number between 1 and the length of the line remaining after the first index, this will be the number of indexes deleted
+
+        num_deleted = random.randint(1, len(correct_line) - first_blank)
+
+        #create a list of the elements of the line
+
+        line_list = correct_line.split()
+
+        #loop through each index from first blank to first blank + num deleted and set the value of that index to "____"
+
+        for i in range(first_blank, first_blank + num_deleted):
+            line_list[i] = "____"
+
+            
+        #convert the list back into a string
+
+        line = " ".join(line_list)
+
+        
+
 
     
 
@@ -213,6 +240,7 @@ def chooseSettings():
                 if (count > numOfQuestions):
                     break
                 #call helper function to generate a fill in the blank variation of the line
+                questionsToReturn.append(FIBQuestionGeneratorHelper(line))
 
 
         f.close()

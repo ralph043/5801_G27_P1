@@ -28,3 +28,19 @@ class Model:
 
     def set_lines(self, lines):
         self.lines = lines
+
+class Question:
+    def __init__(self, options, correct_answer):
+        self.correct_answer = correct_answer
+        self.options = options 
+
+    def get_correct_answer(self):
+        return self.correct_answer
+    def get_options(self):
+        return self.options
+
+    def set_correct_answer(self, correct_answer):
+        self.correct_answer = correct_answer
+
+    def set_options(self, options):
+        self.options = options

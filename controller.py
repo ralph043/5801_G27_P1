@@ -1,3 +1,4 @@
+import json
 import random
 from model import Model
 from question import Question
@@ -21,7 +22,7 @@ def chooseSettings():
 
     output_file_name = input("Enter output file name: ")
 
-     a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
+    #  a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
     #ask for lms type, question type, number of questions, and if they want to remove comments.
     lms_type = input("Enter LMS type: ")
@@ -170,9 +171,9 @@ def chooseSettings():
 
         #creating a file to output
 
-        output_file_name += ".txt"
+        # output_file_name += ".txt"
 
-        f = open(output_file_name, "w+")
+        # f = open(output_file_name, "w+")
 
         #create a list of objects named "questionsToReturn"
 
@@ -228,7 +229,13 @@ def chooseSettings():
                 #call helper function to generate a fill in the blank variation of the line
 
 
-        f.close()
+
+        data=[]
+        for feature in questionsToReturn:
+            data.append({"Question Options: ":feature.get_options()})
+            data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
+        jsonData=json.dumps(data)
+
 
 
         pass

@@ -268,14 +268,7 @@ def generateQuestions(model):
 
     json_formatted_str = json.dumps(json_object, indent=2)
 
+    # print formatted JSON Object, this is for testing and version 0.2 only, this will be changed when implementing file output
+
     print(json_formatted_str)
 
-
-
-    # for question in questionsToReturn:
-    #     print(question.get_options())
-    #     print(question.get_correct_answer())
-    #     print("")
-
-
-    pass

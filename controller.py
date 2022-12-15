@@ -203,12 +203,6 @@ def FIBQuestionGeneratorHelper(correct_line):
 
 
 def generateQuestions(model):
-
-    #creating a file to output
-
-    # output_file_name += ".txt"
-
-    # f = open(output_file_name, "w+"
     
     #create a list of objects named "questionsToReturn"
 
@@ -221,8 +215,6 @@ def generateQuestions(model):
     #variable to count number of questions generated
 
     count = 0
-
-            #functionality to be added in later versions
 
     #if question type is "mc" multiple choice code for multiple choice goes here
 
@@ -250,10 +242,6 @@ def generateQuestions(model):
 
             questionsToReturn.append(FIBQuestionGeneratorHelper(line))
             count = count + 1
-
-    
-
-
 
 
     data=[]

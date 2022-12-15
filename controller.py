@@ -1,3 +1,4 @@
+import json
 import random
 from model import Model
 from question import Question
@@ -6,8 +7,8 @@ from question import Question
 
 def chooseSettings():
     # Ask user for file name and read file line by line into an array
-    file_name = input("Enter file name: ")
-    
+    file_name = input("Enter input file name: ")
+
     while True:
         try:
             file = open(file_name, "r")
@@ -19,9 +20,20 @@ def chooseSettings():
     lines = file.readlines()
     file.close()
 
+    output_file_name = input("Enter output file name: ")
+
+    #  a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
+
     #ask for lms type, question type, number of questions, and if they want to remove comments.
     lms_type = input("Enter LMS type: ")
-    question_type = input("Enter question type: ")
+
+    while True:
+        question_type = input("Enter question type:('mc' for multiple choice / 'fib' for fill in the blank) ")
+
+        if question_type == "mc" or question_type == "fib":
+            break
+        else:
+            print("Please enter a valid question type of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
     while True:
         try:
@@ -106,8 +118,8 @@ def chooseSettings():
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
-    model= Model(lms_type, question_type, num_questions, lines)
-    generateQuestions(model)
+
+    model= Model(lms_type, question_type, num_questions, lines, output_file_name)
 
 
     def MCQuestionGeneratorHelper(correct_line):
@@ -154,6 +166,7 @@ def chooseSettings():
         return q1
 
     
+
     def FIBQuestionGeneratorHelper(correct_line):
         #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
         first_blank = random.randint(0, len(correct_line) - 1)
@@ -187,18 +200,17 @@ def chooseSettings():
 
 
 
-        
-
-
-    
+  
 
 
     def generateQuestions(model):
 
         #creating a file to output
 
-        f = open("output.txt", "w+")
+        # output_file_name += ".txt"
 
+        # f = open(output_file_name, "w+"
+        
         #create a list of objects named "questionsToReturn"
 
         questionsToReturn = []
@@ -228,6 +240,7 @@ def chooseSettings():
                 questionsToReturn.append(MCQuestionGeneratorHelper(line))
                 count = count + 1
 
+
         #if question type is fill in the blank code for fill in the blank goes here
 
         elif (question_type == "fib"):
@@ -238,14 +251,20 @@ def chooseSettings():
                 if (count > numOfQuestions):
                     break
                 #call helper function to generate a fill in the blank variation of the line
+
                 questionsToReturn.append(FIBQuestionGeneratorHelper(line))
                 count = count + 1
 
         
-        #write questions to file
 
 
-        f.close()
+
+
+        data=[]
+        for feature in questionsToReturn:
+            data.append({"Question Options: ":feature.get_options()})
+            data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
+        jsonData=json.dumps(data)
 
 
         pass

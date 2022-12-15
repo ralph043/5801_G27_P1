@@ -18,3 +18,6 @@ otherwise a loop will begin where you will be prompted to enter the start and en
 continue until a value of "-1" is entered in the start line to end the loop. Regardless of which options are chosen, at the
 end of the function the JSON object with the questions as they are stored will be printed to the terminal (this is temporary 
 to demonstrate functionality until LMS formatting is implemented) .
+
+
+Link to Sprint Meeting Recordings: https://drive.google.com/file/d/1M7e6dM6LncGh5mkD2oU-lnuaU6MSTTA8/view?usp=share_link

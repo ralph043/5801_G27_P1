@@ -8,7 +8,7 @@ from question import Question
 def chooseSettings():
     # Ask user for file name and read file line by line into an array
     file_name = input("Enter input file name: ")
-    
+
     while True:
         try:
             file = open(file_name, "r")
@@ -118,6 +118,7 @@ def chooseSettings():
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
+
     model= Model(lms_type, question_type, num_questions, lines, output_file_name)
 
 
@@ -166,6 +167,41 @@ def chooseSettings():
 
     
 
+    def FIBQuestionGeneratorHelper(correct_line):
+        #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
+        first_blank = random.randint(0, len(correct_line) - 1)
+        
+        #randomly generate a number between 1 and the length of the line remaining after the first index, this will be the number of indexes deleted
+
+        num_deleted = random.randint(1, len(correct_line) - first_blank)
+
+        #create a list of the elements of the line
+
+        line_list = correct_line.split()
+
+        #loop through each index from first blank to first blank + num deleted and set the value of that index to "____"
+
+        for i in range(first_blank, first_blank + num_deleted):
+            line_list[i] = "____"
+
+
+        #convert the list back into a string
+
+        fib_line = " ".join(line_list)
+
+        #create a list with the correct line and the fib line
+
+        options = [correct_line, fib_line]
+
+        #create a question object with the list of options and the index of the correct line and return it
+
+        q1 = Question(options, 0)
+        return q1
+
+
+
+  
+
 
     def generateQuestions(model):
 
@@ -173,8 +209,8 @@ def chooseSettings():
 
         # output_file_name += ".txt"
 
-        # f = open(output_file_name, "w+")
-
+        # f = open(output_file_name, "w+"
+        
         #create a list of objects named "questionsToReturn"
 
         questionsToReturn = []
@@ -203,18 +239,6 @@ def chooseSettings():
                     break
                 questionsToReturn.append(MCQuestionGeneratorHelper(line))
                 count = count + 1
-                
-
-            # create a sub list of this line, or maybe create an object 
-            
-                # generate 3 mutants with one element of the list out of place
-
-            # using question as a class so we can make an object out of it
-
-            #reorder indicies of sublist into 3 variations
-
-            #combine 3 variations of sublist with original list
-
 
 
         #if question type is fill in the blank code for fill in the blank goes here
@@ -228,6 +252,12 @@ def chooseSettings():
                     break
                 #call helper function to generate a fill in the blank variation of the line
 
+                questionsToReturn.append(FIBQuestionGeneratorHelper(line))
+                count = count + 1
+
+        
+
+
 
 
         data=[]
@@ -235,7 +265,6 @@ def chooseSettings():
             data.append({"Question Options: ":feature.get_options()})
             data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
         jsonData=json.dumps(data)
-
 
 
         pass

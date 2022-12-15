@@ -17,4 +17,4 @@ enter "c". You will then be asked if you would like to combine any non-order spe
 otherwise a loop will begin where you will be prompted to enter the start and end lines of any lines to combine, this will 
 continue until a value of "-1" is entered in the start line to end the loop. Regardless of which options are chosen, at the
 end of the function the JSON object with the questions as they are stored will be printed to the terminal (this is temporary 
-to demonstrate functionality until LMS formatting is implemented).
+to demonstrate functionality until LMS formatting is implemented) .

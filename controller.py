@@ -20,6 +20,7 @@ def chooseSettings():
     lines = file.readlines()
     file.close()
 
+    num_of_lines = len(lines)
     #  a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
     #ask for lms type, question type, number of questions, and if they want to remove comments.
@@ -36,8 +37,8 @@ def chooseSettings():
     while True:
         try:
             num_questions = int(input("Enter number of questions: "))
-            if (num_questions <= 0):
-                print("Number of questions must be greater than 0. Please try again.")
+            if (num_questions <= 0 or num_questions > num_of_lines):
+                print("Number of questions must be greater than 0, and less than the number of lines in the file inputted. Please try again.")
                 continue
             break
         except ValueError:
@@ -228,9 +229,6 @@ def generateQuestions(model):
     if (question_type == "mc"):
 
         #break down list into sublist
-
-        if (len(questions) < numOfQuestions):
-            exit # have to fix this later, edge case that will need to be handled
         
         for line in questions:
             if (count > numOfQuestions):

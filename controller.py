@@ -1,7 +1,7 @@
 import json
 import random
 from model import Model
-from question import Question
+from model import Question
 
 #class Controller:
 
@@ -19,8 +19,6 @@ def chooseSettings():
 
     lines = file.readlines()
     file.close()
-
-    output_file_name = input("Enter output file name: ")
 
     #  a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
@@ -113,158 +111,171 @@ def chooseSettings():
             
 
     #print lines, this is for testing and version 0.1 only, this can be modified to send lines to the question generator when it is implemented
-    for line in lines:
-        print(line)
+    #for line in lines:
+    #    print(line)
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
 
-    model= Model(lms_type, question_type, num_questions, lines, output_file_name)
+    model= Model(lms_type, question_type, num_questions, lines)
+    generateQuestions(model)
 
+def MCQuestionGeneratorHelper(correct_line):
 
-    def MCQuestionGeneratorHelper(correct_line):
+    #create a list to hold the correct line and 3 mutants
 
-        #create a list to hold the correct line and 3 mutants
+    options = []
 
-        options = []
-
-        #loop for 3 iterations, in each iteration create a variation of the correct line by reordering the elements of the line and adding it to the list
-        
-        for i in range(3):
-                
-                #create a list of the elements of the line
+    #loop for 3 iterations, in each iteration create a variation of the correct line by reordering the elements of the line and adding it to the list
     
-                line_list = correct_line.split()
-    
-                #shuffle the list
-    
-                random.shuffle(line_list)
-    
-                #convert the list back into a string
-    
-                line = " ".join(line_list)
-    
-                #check if the line is already in the list, if it is, re run the loop, otherwise add it to the list
-
-                if line in options:
-                    i = i - 1
-                else:
-                    options.append(line)
-                
-        #add the correct line to the list and shuffle the list
-
-        options.append(correct_line)
-        random.shuffle(options)
-
-        #create a variable to hold the index of the correct line in the list
-
-        correct_index = options.index(correct_line)
-
-        #create a question object with the list of options and the index of the correct line and return it
-
-        q1 = Question(options, correct_index)
-        return q1
-
-    
-
-    def FIBQuestionGeneratorHelper(correct_line):
-        #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
-        first_blank = random.randint(0, len(correct_line) - 1)
-        
-        #randomly generate a number between 1 and the length of the line remaining after the first index, this will be the number of indexes deleted
-
-        num_deleted = random.randint(1, len(correct_line) - first_blank)
-
-        #create a list of the elements of the line
-
-        line_list = correct_line.split()
-
-        #loop through each index from first blank to first blank + num deleted and set the value of that index to "____"
-
-        for i in range(first_blank, first_blank + num_deleted):
-            line_list[i] = "____"
-
-
-        #convert the list back into a string
-
-        fib_line = " ".join(line_list)
-
-        #create a list with the correct line and the fib line
-
-        options = [correct_line, fib_line]
-
-        #create a question object with the list of options and the index of the correct line and return it
-
-        q1 = Question(options, 0)
-        return q1
-
-
-
-  
-
-
-    def generateQuestions(model):
-
-        #creating a file to output
-
-        # output_file_name += ".txt"
-
-        # f = open(output_file_name, "w+"
-        
-        #create a list of objects named "questionsToReturn"
-
-        questionsToReturn = []
-
-        question_type = model.get_question_type()
-        questions = model.get_lines()
-        numOfQuestions = model.get_num_questions()
-
-        #variable to count number of questions generated
-
-        count = 0
-
-               #functionality to be added in later versions
-
-        #if question type is "mc" multiple choice code for multiple choice goes here
-
-        if (question_type == "mc"):
-
-            #break down list into sublist
-
-            if (len(questions) < num_questions):
-                exit # have to fix this later, edge case that will need to be handled
+    for i in range(3):
             
-            for line in questions:
-                if (count > numOfQuestions):
-                    break
-                questionsToReturn.append(MCQuestionGeneratorHelper(line))
-                count = count + 1
+            #create a list of the elements of the line
 
+            line_list = correct_line.split()
 
-        #if question type is fill in the blank code for fill in the blank goes here
+            #shuffle the list
 
-        elif (question_type == "fib"):
+            random.shuffle(line_list)
+
+            #convert the list back into a string
+
+            line = " ".join(line_list)
+
+            #check if the line is already in the list, if it is, re run the loop, otherwise add it to the list
+
+            if line in options:
+                i = i - 1
+            else:
+                options.append(line)
             
-            #loop through each line in the list
+    #add the correct line to the list and shuffle the list
 
-            for line in questions:
-                if (count > numOfQuestions):
-                    break
-                #call helper function to generate a fill in the blank variation of the line
+    options.append(correct_line)
+    random.shuffle(options)
 
-                questionsToReturn.append(FIBQuestionGeneratorHelper(line))
-                count = count + 1
+    #create a variable to hold the index of the correct line in the list
 
+    correct_index = options.index(correct_line)
+
+    #create a question object with the list of options and the index of the correct line and return it
+
+    q1 = Question(options, correct_index)
+    return q1
+
+
+
+def FIBQuestionGeneratorHelper(correct_line):
+    #randomly generate a number between 0 and the length of the line, this will be the index of the first blank
+    first_blank = random.randint(0, len(correct_line) - 1)
+    
+    #randomly generate a number between 1 and the length of the line remaining after the first index, this will be the number of indexes deleted
+
+    num_deleted = random.randint(1, len(correct_line) - first_blank)
+
+    #create a list of the elements of the line
+
+    line_list = correct_line.split()
+
+    #loop through each index from first blank to first blank + num deleted and set the value of that index to "____"
+
+    for i in range(first_blank, first_blank + num_deleted):
+        line_list[i] = "____"
+
+
+    #convert the list back into a string
+
+    fib_line = " ".join(line_list)
+
+    #create a list with the correct line and the fib line
+
+    options = [correct_line, fib_line]
+
+    #create a question object with the list of options and the index of the correct line and return it
+
+    q1 = Question(options, 0)
+    return q1
+
+
+
+
+
+
+def generateQuestions(model):
+
+    #creating a file to output
+
+    # output_file_name += ".txt"
+
+    # f = open(output_file_name, "w+"
+    
+    #create a list of objects named "questionsToReturn"
+
+    questionsToReturn = []
+
+    question_type = model.get_question_type()
+    questions = model.get_lines()
+    numOfQuestions = model.get_num_questions()
+
+    #variable to count number of questions generated
+
+    count = 0
+
+            #functionality to be added in later versions
+
+    #if question type is "mc" multiple choice code for multiple choice goes here
+
+    if (question_type == "mc"):
+
+        #break down list into sublist
+
+        if (len(questions) < numOfQuestions):
+            exit # have to fix this later, edge case that will need to be handled
         
+        for line in questions:
+            if (count > numOfQuestions):
+                break
+            questionsToReturn.append(MCQuestionGeneratorHelper(line))
+            count = count + 1
+
+
+    #if question type is fill in the blank code for fill in the blank goes here
+
+    elif (question_type == "fib"):
+        
+        #loop through each line in the list
+
+        for line in questions:
+            if (count > numOfQuestions):
+                break
+            #call helper function to generate a fill in the blank variation of the line
+
+            questionsToReturn.append(FIBQuestionGeneratorHelper(line))
+            count = count + 1
+
+    
 
 
 
 
-        data=[]
-        for feature in questionsToReturn:
-            data.append({"Question Options: ":feature.get_options()})
-            data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
-        jsonData=json.dumps(data)
+    data=[]
+    for feature in questionsToReturn:
+        data.append({"Question Options: ":feature.get_options()})
+        data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
+    jsonData=json.dumps(data)
+
+    json_object = json.loads(jsonData)
+
+    json_formatted_str = json.dumps(json_object, indent=2)
+
+    print(json_formatted_str)
 
 
-        pass
+
+    # for question in questionsToReturn:
+    #     print(question.get_options())
+    #     print(question.get_correct_answer())
+    #     print("")
+
+
+    pass

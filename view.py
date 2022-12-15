@@ -2,7 +2,6 @@ from controller import *
 
 
 
-
 def render():
     chooseSettings()
 

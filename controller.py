@@ -1,7 +1,7 @@
 import json
 import random
 from model import Model
-from question import Question
+from model import Question
 
 #class Controller:
 
@@ -19,8 +19,6 @@ def chooseSettings():
 
     lines = file.readlines()
     file.close()
-
-    output_file_name = input("Enter output file name: ")
 
     #  a valid input of either 'mc' for multiple choice or 'fib' for fill in the blank")
 
@@ -113,13 +111,13 @@ def chooseSettings():
             
 
     #print lines, this is for testing and version 0.1 only, this can be modified to send lines to the question generator when it is implemented
-    for line in lines:
-        print(line)
+    # for line in lines:
+    #     print(line)
 
     #declare new model object needed for question generator and later formatting for exporting to lms system
     global model 
-    model= Model(lms_type, question_type, num_questions, lines, output_file_name)
-
+    model= Model(lms_type, question_type, num_questions, lines)
+    qs = generateQuestions(model)
 
     def MCQuestionGeneratorHelper(correct_line):
 
@@ -235,6 +233,10 @@ def chooseSettings():
             data.append({"Question Options: ":feature.get_options()})
             data.append({"Correct Option index(0 indexed): ":feature.get_correct_answer()})
         jsonData=json.dumps(data)
+
+        for line in questionsToReturn:
+            print(line.get_options)
+            print(line.get_correct_answer)
 
 
 

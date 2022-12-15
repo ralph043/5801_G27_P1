@@ -1,10 +1,9 @@
 class Model:
-    def __init__(self, lms_type, question_type, num_questions, lines, output_file_name):
+    def __init__(self, lms_type, question_type, num_questions, lines):
         self.lms_type = lms_type
         self.question_type = question_type
         self.num_questions = num_questions
         self.lines = lines
-        self.output_file_name = output_file_name
     
     def get_lms_type(self):
         return self.lms_type
@@ -18,9 +17,6 @@ class Model:
     def get_lines(self):
         return self.lines
 
-    def get_output_file_name(self):
-        return self.output_file_name
-
     def set_lms_type(self, lms_type):
         self.lms_type = lms_type
 
@@ -32,9 +28,6 @@ class Model:
 
     def set_lines(self, lines):
         self.lines = lines
-
-    def set_output_file_name(self, output_file_name):
-        self.output_file_name = output_file_name
 
 class Question:
     def __init__(self, options, correct_answer):
